@@ -160,6 +160,7 @@ const ConfigConta = () => {
                             <thead>
                                 <tr>
                                     <th>Nome</th>
+                                    <th>CPF</th>
                                     <th>E-mail</th>
                                     <th>Função</th>
                                     <th>Ações</th>
@@ -169,6 +170,7 @@ const ConfigConta = () => {
                                 {usuariosFiltrados.map(usuario => (
                                     <tr key={usuario.id}>
                                         <td>{usuario.nome_completo}</td>
+                                        <td>{usuario.cpf}</td>
                                         <td>{usuario.email}</td>
                                         <td>
                                             <span className="badge">

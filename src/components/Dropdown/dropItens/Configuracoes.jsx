@@ -30,7 +30,7 @@ const Config = () => {
         // Assume que UserService.getMe() busca os dados do usuário logado
         const data = await UserService.getMe();
         setUserId(data.id);
-        // Garante que o nome do campo aqui (nomeCompleto) corresponde ao que vem do backend (nome_completo)
+        console.log(data)
         setNomeCompleto(data.nome_completo || ''); 
         setEmail(data.email || '');
         setCpf(data.cpf || '');
@@ -59,15 +59,15 @@ const Config = () => {
     }
 
     try {
-      // Envia apenas os campos que podem ser atualizados para o perfil
       const updatedData = {
-        // Garante que os nomes dos campos aqui (nome_completo, cpf, email)
-        // correspondem exatamente aos esperados pelo seu serializer Django para UPDATE
         nome_completo: nomeCompleto, 
         cpf: cpf,
         email: email,
       };
-      await UserService.updateUser(userId, updatedData);
+
+
+      const response = await UserService.updateUser(userId, updatedData);
+      console.log(response)
       setSuccessMessage('Dados da conta atualizados com sucesso!');
       setEditandoPerfil(false);
       setTimeout(() => setSuccessMessage(''), 3000);
@@ -101,16 +101,12 @@ const Config = () => {
     }
 
     try {
-      // Chama o endpoint de alteração de senha na UserService
-      // Garante que os nomes dos campos (current_password, new_password)
-      // correspondem aos esperados pelo seu endpoint de mudança de senha no Django
-      await UserService.changePassword(userId, {
-        current_password: senhaAtual, 
+      await UserService.updatePassword(userId, {
+        old_password: senhaAtual, 
         new_password: novaSenha,     
       });
       setSuccessMessage('Senha alterada com sucesso!');
       setEditandoSenha(false);
-      // Limpa os campos de senha após a alteração bem-sucedida
       setSenhaAtual('');
       setNovaSenha('');
       setConfirmarSenha('');
@@ -156,7 +152,7 @@ const Config = () => {
             <>
               <h3><i className="bi bi-gear"></i> Editar Conta</h3>
               <form onSubmit={handleSalvarPerfil}>
-                <label>Nome Completo:</label> {/* Label atualizado */}
+                <label>Nome Completo:</label> 
                 <input
                   type="text"
                   value={nomeCompleto}

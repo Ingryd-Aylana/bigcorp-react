@@ -82,4 +82,8 @@ export const UserService = {
     const response = await api.delete(`/users/${userId}/`);
     return response.data;
   },
+  updatePassword: async (userId, payload) =>{
+    const response = await api.post(`users/password/`, payload);
+    return response.data;
+  }
 };
