@@ -43,6 +43,7 @@ const ConsultaComercial = () => {
     setLoading(true);
     try {
       const { resultado_api } = await ConsultaService.consultarComercial(form.cnpj);
+      console.log(resultado_api)
       const empresa = resultado_api?.Result?.[0] || null;
       if (empresa) {
         setResult(empresa);
@@ -68,7 +69,7 @@ const ConsultaComercial = () => {
     setModalError(null);
     setModalPersonData(null);
     try {
-      const { resultado_api } = await ConsultaService.consultarContatoComercial(cnpj);
+      const { resultado_api } = await ConsultaService.consultarContatoComercial(cpf);
       const regData = resultado_api?.Result?.[0]?.RegistrationData || null;
       if (regData) setModalPersonData(regData);
       else setModalError("Nenhum dado de contato encontrado para esta pessoa.");
@@ -196,7 +197,7 @@ const ConsultaComercial = () => {
               placeholder="Digite apenas os 14 dígitos do CNPJ"
               value={form.cnpj}
               onChange={handleCnpjChange}
-              maxLength="14"
+              maxLength="18"
             />
             <button
               className="btn-primary"
